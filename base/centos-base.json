@@ -1,0 +1,63 @@
+{
+  "_readme": [
+    " ",
+    "AMI: ",
+    " ",
+    ""
+  ],
+  "builders": [
+    {
+      "ami_description": "{{user `ami_description`}} AMI",
+      "ami_name": "{{user `ami_nam3`}} {{timestamp}}",
+      "ami_regions": [
+        "us-east-1"
+      ],
+      "instance_type": "t2.micro",
+      "region": "us-east-1",
+      "run_tags": {
+        "ami-create": "{{user `ami_name`}}"
+      },
+      "source_ami": "{{user `ami_base`}}",
+      "ssh_username": "{{user `ami_user`}}",
+      "tags": {
+        "OS_Name": "{{user `ami_user`}}",
+        "OS_Version": "7",
+        "SHA": "{{user `ami_shaw`}}",
+        "AMI": "{{user `ami_description`}}"
+      },
+      "type": "amazon-ebs"
+    }
+  ],
+  "post-processors": [
+    {
+      "output": "manifest-base.json",
+      "strip_path": true,
+      "type": "manifest"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
+      ]
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo {{ user `ec2_user` }} | {{ .Vars }} sudo -E -S bash '{{ .Path }}'",
+      "scripts": [
+        "./base/bin/baseline.sh",
+        "./base/bin/cleanup.sh",
+        "./base/bin/debug.sh"
+      ]
+    }
+  ],
+  "variables": {
+    "ami_name": "baseline-{{env `AMI_SSH_USER`}}-7",
+    "ami_description": "{{env `BASE_NAME`}}",
+    "ami_base": "{{env `BASE_AMI_ID`}}",
+    "ami_sha":  "{{env `SHA`}}",
+    "ami_user":  "{{env `AMI_SSH_USER`}}",
+    "ec2_user":  "{{env `AMI_SSH_USER`}}"
+  }
+}
