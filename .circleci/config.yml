@@ -10,6 +10,9 @@ jobs:
           name: Validate base
           command: packer validate ./base/centos-base.json
   build-base:
+    branches:
+      only:
+        - v3
     docker:
       - image: flannon/circleci-centos7-packer
     working_directory: ~/packer
