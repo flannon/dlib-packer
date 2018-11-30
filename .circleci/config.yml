@@ -19,7 +19,7 @@ jobs:
           at: ~/packer
       - run:
           name: Build base
-          command: ./scripts/build.sh base ./base/centos-base.json
+          command: ./bin/build.py centos
           no_output_timeout: 30m
       - persist_to_workspace:
           root: .
@@ -35,6 +35,6 @@ workflows:
       - build-base:
           filters:
             branches:
-              only: v3
+              only: master
           requires:
             - validate
