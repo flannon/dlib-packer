@@ -8,10 +8,10 @@ jobs:
       - checkout
       - run:
           #name: Validate base
-          name: whereis packer
+          name: pwd
           #command: packer validate ./base/centos-base.json
           #command: which packer
-          command: whereis packer
+          command: pwd
       #- run:
       #    name: ls
       #    comman: ls
