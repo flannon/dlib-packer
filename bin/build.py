@@ -76,8 +76,8 @@ def main():
     sha = get_sha()
     os.environ['SHA'] = sha
 
-    #ami_name = base_name[:50]
-    ami_name = base_name
+    ami_name = base_name[:50]
+    #ami_name = base_name
 
     ami_ssh_user = 'centos'
     os.environ['AMI_SSH_USER'] = ami_ssh_user
@@ -85,6 +85,12 @@ def main():
 
     build_config = "base/" + ami_ssh_user + "-base.json"
     v = check_output(["packer", "validate", build_config])
+
+    print("Config vars")
+    print("BASE_NAME: " + os.environ['BASE_NAME'])
+    print("BASE_AMI_ID: " + os.environ['BASE_AMI_ID'])
+    print("SHA: " + os.environ['SHA'])
+    print("AMI_SSH_USER: " + os.environ['AMI_SSH_USER'])
 
     #print("v:" + v + ':')
     if v == "Template validated successfully.\n":
