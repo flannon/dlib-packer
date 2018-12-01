@@ -9,6 +9,7 @@ jobs:
       - run:
           name: Validate base
           command: packer validate ./base/centos-base.json
+
   build-base:
     docker:
       - image: flannon/circleci-centos7-packer
@@ -19,7 +20,7 @@ jobs:
           at: ~/packer
       - run:
           name: Build base
-          command: ./scripts/build.sh base ./base/centos-base.json
+          command: ./bin/build.py centos
           no_output_timeout: 30m
       - persist_to_workspace:
           root: .
@@ -27,11 +28,16 @@ jobs:
             - manifest-base.json
       - store_artifacts:
           path: manifest-base.json
+
 workflows:
   version: 2
   build-and-deploy:
     jobs:
       - validate
       - build-base:
+          context: aws_deploy
+          filters:
+            branches:
+              only: v3
           requires:
             - validate
