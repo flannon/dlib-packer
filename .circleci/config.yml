@@ -11,9 +11,9 @@ jobs:
           name: which packer
           #command: packer validate ./base/centos-base.json
           command: which packer
-      - run:
-          name: ls
-          comman: ls
+      #- run:
+      #    name: ls
+      #    comman: ls
 
   build-base:
     docker:
