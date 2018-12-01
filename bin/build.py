@@ -54,20 +54,30 @@ def get_sha():
     return sha
 
 def main():
+    print("test")
+    #access = os.environ['AWS_ACCESS_KEY_ID']
+    #print("access: " + access)
+    ami_instance_profile = os.environ['AMI_INSTANCE_PROFILE']
+    #print("ami_instance_profile: " + ami_instance_profile)
+    print("AMI_INSTANCE_PROFILE: " + os.environ['AMI_INSTANCE_PROFILE'])
+
     dirname = os.path.dirname(os.path.realpath(sys.argv[0]))
     os_name = sys.argv[1]
     image_spec = get_image_spec(os_name)
     caller_id = image_spec[0]
     base_image_prefix = image_spec[1]
+    #print("is_public, image_spec[2]: " + image_spec[2])
     is_public = image_spec[2]
+    #print("is_public: " + is_public)
     base_ami_id, base_name = get_base_ami(caller_id, base_image_prefix, is_public)
-    #print(image_id + ': ' + image_name)
+    print("base_ami_id: " + base_ami_id)
     os.environ['BASE_AMI_ID'] = base_ami_id
     os.environ['BASE_NAME'] = base_name
     sha = get_sha()
     os.environ['SHA'] = sha
 
-    ami_name = base_name[:50]
+    #ami_name = base_name[:50]
+    ami_name = base_name
 
     ami_ssh_user = 'centos'
     os.environ['AMI_SSH_USER'] = ami_ssh_user
@@ -79,7 +89,7 @@ def main():
     #print("v:" + v + ':')
     if v == "Template validated successfully.\n":
         print("building ami")
-        call(["packer", "build", build_config])
+        #call(["packer", "build", build_config])
     else:
         print("Template validation falied")
         print(v)
