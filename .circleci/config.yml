@@ -12,9 +12,7 @@ jobs:
           #command: packer validate ./base/centos-base.json
           #command: which packer
           command: pwd
-      #- run:
-      #    name: ls
-      #    comman: ls
+      - run: ls -l
 
   build-base:
     docker:
