@@ -20,7 +20,7 @@ jobs:
       - run: source venv/bin/activate
       - run:
           name: Validate centos (base)
-          command: python build.py --os centos
+          command: python build.py --os centos -v
 
       #- run:
       #    name: ls
