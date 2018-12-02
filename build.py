@@ -155,7 +155,7 @@ def main():
         print("AMI_SSH_USER: " + os.environ['AMI_SSH_USER'])
 
         #call(["packer", "validate", bc])
-        #print("packer validate " + bc)
+        print("packer validate " + bc)
 
     elif args["os"]:
         print("building ami...")
