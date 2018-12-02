@@ -1,5 +1,6 @@
 version: 2
 jobs:
+
   setup:
     docker:
       - image: flannon/circleci-centos7-packer
@@ -17,55 +18,58 @@ jobs:
     working_directory: ~/packer
     steps:
       - checkout
-      #- run: source venv/bin/activate
-      - run: echo "source /home/circleci/packer/venv/bin/activate" >> $BASH_ENV
-
-      - run:
-          name: ls
-          command: ls -l
-      - run: pwd
-      - run: python --version
-
       - run:
           name: Validate centos (base)
           command: python build.py --os centos -v
 
       #- run:
+      #    name: ls
+      #    command: ls -l
+      #- run: pwd
+      #- run: python --version
+
+      #- run:
       #    name: packervalidate
       #    command packer validate base/centos-base.json
 
-  #build-base:
-  #  docker:
-  #    - image: flannon/circleci-centos7-packer
-  #  working_directory: ~/packer
-  #  steps:
-  #    - checkout
-  #    - attach_workspace:
-  #        at: ~/packer
-  #    - run:
-  #        name: Build base
-  #        command: ./bin/build.py centos
-  #        no_output_timeout: 30m
-      #- persist_to_workspace:
-      #    root: .
-      #    paths:
-      #      - manifest-base.json
-      #- store_artifacts:
-      #    path: manifest-base.json
+  build-base:
+    docker:
+      - image: flannon/circleci-centos7-packer
+    working_directory: ~/packer
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/packer
+      - run:
+          name: Build base
+          command: python build.py --os centos
+          no_output_timeout: 30m
+      - persist_to_workspace:
+          root: .
+          paths:
+            - manifest-base.json
+      - store_artifacts:
+          path: manifest-base.json
 
 workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - setup
+      - setup:
+          filters:
+            branches:
+              only: v3
       - validate:
           context: aws_deploy
           requires:
             - setup
-      #- build-base:
-      #    context: aws_deploy
-      #    filters:
-      #      branches:
-      #        only: v3
-      #    requires:
-      #      - validate
+          filters:
+            branches:
+              only: v3
+      - build-base:
+          context: aws_deploy
+          filters:
+            branches:
+              only: v3
+          requires:
+            - validate
