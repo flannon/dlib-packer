@@ -1,6 +1,8 @@
 version: 2
 jobs:
   setup:
+    docker:
+      - image: flannon/circleci-centos7-packer
     working_directory: ~/packer
     steps:
       - run: pip install virtualenv
