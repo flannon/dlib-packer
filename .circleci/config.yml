@@ -44,6 +44,7 @@ workflows:
   build-and-deploy:
     jobs:
       - validate
+          context: aws_deploy
       #- build-base:
       #    context: aws_deploy
       #    filters:
