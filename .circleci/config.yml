@@ -17,7 +17,8 @@ jobs:
     working_directory: ~/packer
     steps:
       - checkout
-      - run: source venv/bin/activate
+      #- run: source venv/bin/activate
+      - run: echo "source ~/packer/venv/bin/activate" >> $BASH_ENV
       - run:
           name: Validate centos (base)
           command: python build.py --os centos -v
