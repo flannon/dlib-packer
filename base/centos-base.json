@@ -1,11 +1,11 @@
 {
   "_readme": [
     "These environment variables need to be set in the context or project: ",
-    "AMI_INSTANCE_PROFILE",
+    "IAM_INSTANCE_PROFILE",
     "AWS_ACCESS_KEY_ID",
     "AWS_SECRET_ACCESS_KEY",
     "BUILD_SECURITY_GROUP",
-    "BUILD_SUBNET_IS",
+    "BUILD_SUBNET_ID",
     "BUILD_VPC_ID",
     " ",
     "These environment variables are set at run time by build.py",
@@ -25,14 +25,13 @@
         "us-east-1"
       ],
       "ami_virtualization_type": "{{ user `ami_virtualization_type` }}",
-      "iam_instance_profile": "{{ user `ami_instance_profile` }}",
       "instance_type": "{{ user `instance_type` }}",
       "region": "{{ user `region` }}",
       "run_tags": {
         "ami-create": "{{user `ami_name`}}"
       },
       "secret_key": "{{user `secret_key`}}",
-      "security_group_ids": [ "{{ user `security_group_ids` }}" ],
+      "security_group_ids": [ "{{ user `security_group_id` }}" ],
       "source_ami": "{{user `ami_base`}}",
       "ssh_username": "{{user `ami_user`}}",
       "subnet_id": "{{ user `subnet_id` }}",
@@ -78,11 +77,11 @@
     "ami_user":  "{{env `AMI_SSH_USER`}}",
     "ec2_user":  "{{env `AMI_SSH_USER`}}",
     "ami_virtualization_type": "hvm",
-    "ami_instance_profile": "{{env `AMI_INSTANCE_PROFILE`}}",
+    "iam_instance_profile": "{{env `AMI_INSTANCE_PROFILE`}}",
     "instance_type": "t2.micro",
     "region": "us-east-1",
     "secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
-    "security_group_ids": [ "{{env `BUILD_SECURITY_GROUP`}}" ],
+    "security_group_id": "{{ env `BUILD_SECURITY_GROUP` }}",
     "subnet_id": "{{env `BUILD_SUBNET_ID`}}",
     "vpc_id": "{{env `BUILD_VPC_ID`}}"
   }
