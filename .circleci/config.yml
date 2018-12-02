@@ -11,8 +11,9 @@ jobs:
       #    command: build.py centos
       - run:
           name: ls
-          command: ls -l 
+          command: ls -l
       - run: pwd
+      - run: python --version
       #- run:
       #    name: packervalidate
       #    command packer validate base/centos-base.json
