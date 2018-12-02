@@ -6,13 +6,10 @@ jobs:
     working_directory: ~/packer
     steps:
       - checkout
-      #- run: pip install --user virtualenv
       - run: ls -l
-      #- run: virtualenv venv
       - run: source venv/bin/activate
       - run: pip list
       - run: python --version
-      #- run: pip install requirements.txt
 
   validate:
     docker:
@@ -58,7 +55,7 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      #- setup
+      - setup
       - validate:
       #    context: aws_deploy
       #- build-base:
