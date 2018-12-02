@@ -10,6 +10,7 @@ jobs:
       #- run: source venv/bin/activate
       #- run: pip install requirements.txt
       - run: ls -l
+
   validate:
     docker:
       - image: flannon/circleci-centos7-packer
@@ -55,8 +56,8 @@ workflows:
   build-and-deploy:
     jobs:
       - setup
-      - validate:
-          context: aws_deploy
+      #- validate:
+      #    context: aws_deploy
       #- build-base:
       #    context: aws_deploy
       #    filters:
