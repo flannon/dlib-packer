@@ -1,45 +1,48 @@
 {
   "_readme": [
-    "Required environment variables: ",
+    "These environment variables need to be set in the context or project: ",
     "AMI_INSTANCE_PROFILE",
     "AWS_ACCESS_KEY_ID",
     "AWS_SECRET_ACCESS_KEY",
     "BUILD_SECURITY_GROUP",
     "BUILD_SUBNET_IS",
     "BUILD_VPC_ID",
+    " ",
+    "These environment variables are set at run time by build.py",
+    "AMI_SSH_USER",
+    "BASE_AMI_ID",
+    "BASE_NAME",
+    "SHA",
     ""
   ],
   "builders": [
     {
       "type": "amazon-ebs",
+      "access_key": "{{user `access_key`}}",
       "ami_description": "{{user `ami_description`}} AMI",
       "ami_name": "{{user `ami_nam3`}} {{timestamp}}",
       "ami_regions": [
         "us-east-1"
       ],
-      "instance_type": "t2.micro",
-
       "ami_virtualization_type": "{{ user `ami_virtualization_type` }}",
       "iam_instance_profile": "{{ user `ami_instance_profile` }}",
       "instance_type": "{{ user `instance_type` }}",
       "region": "{{ user `region` }}",
-      "region": "us-east-1",
-      "ssh_username": "{{ user `ec2_username` }}",
-      "vpc_id": "{{ user `vpc_id` }}",
-      "subnet_id": "{{ user `subnet_id` }}",
-      "security_group_ids": [ "{{ user `security_group_ids` }}" ],
-
       "run_tags": {
         "ami-create": "{{user `ami_name`}}"
       },
+      "secret_key": "{{user `secret_key`}}",
+      "security_group_ids": [ "{{ user `security_group_ids` }}" ],
       "source_ami": "{{user `ami_base`}}",
       "ssh_username": "{{user `ami_user`}}",
+      "subnet_id": "{{ user `subnet_id` }}",
       "tags": {
         "OS_Name": "{{user `ami_user`}}",
         "OS_Version": "7",
         "SHA": "{{user `ami_shaw`}}",
         "AMI": "{{user `ami_description`}}"
-      }
+      },
+      "vpc_id": "{{ user `vpc_id` }}"
     }
   ],
   "post-processors": [
@@ -67,6 +70,7 @@
     }
   ],
   "variables": {
+    "access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
     "ami_name": "baseline-{{env `AMI_SSH_USER`}}-7",
     "ami_description": "{{env `BASE_NAME`}}",
     "ami_base": "{{env `BASE_AMI_ID`}}",
@@ -75,10 +79,11 @@
     "ec2_user":  "{{env `AMI_SSH_USER`}}",
     "ami_virtualization_type": "hvm",
     "ami_instance_profile": "{{env `AMI_INSTANCE_PROFILE`}}",
-    "instance_type": "t2.medium",
+    "instance_type": "t2.micro",
     "region": "us-east-1",
-    "vpc_id": "{{env `BUILD_VPC_ID`}}",
+    "secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "security_group_ids": "{{env `BUILD_SECURITY_GROUP`}}",
     "subnet_id": "{{env `BUILD_SUBNET_ID`}}",
-    "security_group_ids": "{{env `BUILD_SECURITY_GROUP`}}"
+    "vpc_id": "{{env `BUILD_VPC_ID`}}"
   }
 }
