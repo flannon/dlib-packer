@@ -66,25 +66,25 @@ def get_ssh_user(build_os):
 
 
 def build_config(build_os):
-    print("test")
+    #print("test")
     access = os.environ['AWS_ACCESS_KEY_ID']
-    print("access: " + access)
+    #print("access: " + access)
     ami_instance_profile = os.environ['AMI_INSTANCE_PROFILE']
-    print("ami_instance_profile: " + ami_instance_profile)
-    print("AMI_INSTANCE_PROFILE: " + os.environ['AMI_INSTANCE_PROFILE'])
+    #print("ami_instance_profile: " + ami_instance_profile)
+    #print("AMI_INSTANCE_PROFILE: " + os.environ['AMI_INSTANCE_PROFILE'])
 
     dirname = os.path.dirname(os.path.realpath(sys.argv[0]))
 
     ##os_name = sys.argv[1]
-    print("build_os: " + build_os)
+    #print("build_os: " + build_os)
     image_spec = get_image_spec(build_os)
     caller_id = image_spec[0]
     base_image_prefix = image_spec[1]
-    print("is_public, image_spec[2]: " + image_spec[2])
+    #print("is_public, image_spec[2]: " + image_spec[2])
     is_public = image_spec[2]
-    print("is_public: " + is_public)
+    #print("is_public: " + is_public)
     base_ami_id, base_name = get_base_ami(caller_id, base_image_prefix, is_public)
-    print("base_ami_id: " + base_ami_id)
+    #print("base_ami_id: " + base_ami_id)
     os.environ['BASE_AMI_ID'] = base_ami_id
     os.environ['BASE_NAME'] = base_name
     sha = get_sha()
