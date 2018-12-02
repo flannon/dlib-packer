@@ -14,7 +14,8 @@ import sys
 
 #print("OS: " + os_name)
 
-def get_image_spec(os_name):
+#def get_image_spec(os_name):
+def get_image_spec(build_os):
     self_caller_id = boto3.client('sts').get_caller_identity().get('Account')
     #print(boto3.client('sts').get_caller_identity()['Account'])
     os_names = {
@@ -23,7 +24,9 @@ def get_image_spec(os_name):
         'fedora': ('125523088429', 'Fedora-Cloud-Base-29-*"', 'true'),
         'self': (self_caller_id, 'name'),
     }
-    return os_names.get(os_name, 'undef')
+    #return os_names.get(os_name, 'undef')
+    print("os_name.get: " )
+    return os_names.get(build_os)
 
 
 
@@ -76,7 +79,7 @@ def build_config(build_os):
     dirname = os.path.dirname(os.path.realpath(sys.argv[0]))
 
     ##os_name = sys.argv[1]
-    #print("build_os: " + build_os)
+    print("build_os: " + build_os)
     image_spec = get_image_spec(build_os)
     caller_id = image_spec[0]
     base_image_prefix = image_spec[1]
@@ -151,13 +154,13 @@ def main():
         print("SHA: " + os.environ['SHA'])
         print("AMI_SSH_USER: " + os.environ['AMI_SSH_USER'])
 
-        call(["packer", "validate", bc])
+        #call(["packer", "validate", bc])
         #print("packer validate " + bc)
 
     elif args["os"]:
         print("building ami...")
         print(args["os"])
-        build_config(args["os"])
+        #build_config(args["os"])
         print("building")
     #else:
     #    print("Usage: build.py -os <operating sytem> || -v")
