@@ -82,7 +82,7 @@
     "instance_type": "t2.micro",
     "region": "us-east-1",
     "secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
-    "security_group_ids": "{{env `BUILD_SECURITY_GROUP`}}",
+    "security_group_ids": [ "{{env `BUILD_SECURITY_GROUP`}}" ],
     "subnet_id": "{{env `BUILD_SUBNET_ID`}}",
     "vpc_id": "{{env `BUILD_VPC_ID`}}"
   }
