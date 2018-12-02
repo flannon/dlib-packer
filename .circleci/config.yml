@@ -58,6 +58,7 @@ workflows:
           filters:
             branches:
               only: v3
+
       - validate:
           context: aws_deploy
           requires:
@@ -65,10 +66,11 @@ workflows:
           filters:
             branches:
               only: v3
-      #- build-base:
-      #    context: aws_deploy
-      #    filters:
-      #      branches:
-      #        only: v3
-      #    requires:
-      #      - validate
+
+      - build-base:
+          context: aws_deploy
+          filters:
+            branches:
+              only: v3
+          requires:
+            - validate

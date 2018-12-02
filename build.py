@@ -136,34 +136,34 @@ def main():
 
     os.environ['AWS_DEFAULT_REGION'] = "us-east-1"
     if args["validate"]:
-        print("validating template " + str(args["validate"]))
-        print("validate only")
-
-        #build_os = args(["os"])
-        #print(build_os)
 
         build_os = args["os"][0]
         bc = build_config(build_os)
 
-        print("Config vars")
-        print("BASE_NAME: " + os.environ['BASE_NAME'])
-        print("BASE_AMI_ID: " + os.environ['BASE_AMI_ID'])
-        print("SHA: " + os.environ['SHA'])
-        print("AMI_SSH_USER: " + os.environ['AMI_SSH_USER'])
+        #print("Config vars")
+        #print("BASE_NAME: " + os.environ['BASE_NAME'])
+        #print("BASE_AMI_ID: " + os.environ['BASE_AMI_ID'])
+        #print("SHA: " + os.environ['SHA'])
+        #print("AMI_SSH_USER: " + os.environ['AMI_SSH_USER'])
 
-        #call(["python", "--version"])
         call(["packer", "validate", bc])
-        #print("packer validate " + bc)
 
     elif args["os"]:
         print("building ami...")
-        #print(args["os"])
 
-        build_config(args["os"])
+        build_os = args["os"][0]
+        bc = build_config(build_os)
 
-        print("building")
-    #else:
-    #    print("Usage: build.py -os <operating sytem> || -v")
+        #print("Config vars")
+        #print("BASE_NAME: " + os.environ['BASE_NAME'])
+        #print("BASE_AMI_ID: " + os.environ['BASE_AMI_ID'])
+        #print("SHA: " + os.environ['SHA'])
+        #print("AMI_SSH_USER: " + os.environ['AMI_SSH_USER'])
+
+        call(["packer", "build", bc])
+
+    else:
+        print("Usage: build.py -os <operating sytem> | -v")
 
 
 if __name__ == "__main__":
