@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: Validate centos (base)
-          command: python build.py centos
+          command: python build.py --os centos
 
       #- run:
       #    name: ls
