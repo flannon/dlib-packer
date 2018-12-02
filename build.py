@@ -150,6 +150,8 @@ def main():
         #print("build_vpc: " + os.environ['BUILD_VPC_ID'])
         #print("build_subnet_id: "  + os.environ['BUILD_SUBNET_ID'])
         #print("build_sec_group: "  + os.environ['BUILD_SECURITY_GROUP'])
+
+        print("base_ami_id: " + os.environ['BASE_AMI_ID'])
         call(["packer", "validate", bc])
 
     elif args["os"]:
