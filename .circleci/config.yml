@@ -7,8 +7,9 @@ jobs:
     steps:
       - run: pip install virtualenv
       - run: virtualenv venv
-      - run: source venv/bin/activate
-      - run: pip install requirements.txt
+      #- run: source venv/bin/activate
+      #- run: pip install requirements.txt
+      -run: ls -l
   validate:
     docker:
       - image: flannon/circleci-centos7-packer
