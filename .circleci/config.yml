@@ -7,17 +7,14 @@ jobs:
     steps:
       - checkout
       - run:
-          #name: Validate base
-          name: pwd
-          #command: packer validate ./base/centos-base.json
-          #command: which packer
-          command: pwd
-      - run:
-          name: ls
-          command: ls -l base
-      - run:
-          name: packervalidate
-          command packer validate base/centos-base.json
+          name: Validate centos (base)
+          command: build.py centos
+      #- run:
+      #    name: ls
+      #    command: ls -l base
+      #- run:
+      #    name: packervalidate
+      #    command packer validate base/centos-base.json
 
   build-base:
     docker:
