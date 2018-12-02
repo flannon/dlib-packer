@@ -138,6 +138,7 @@ def main():
 #
 #    print(args["osname"])
 
+    os.environ['AWS_DEFAULT_REGION'] = "us-east-1"
     if args["validate"]:
         print("validating template " + str(args["validate"]))
         print("validate only")
@@ -159,7 +160,7 @@ def main():
 
     elif args["os"]:
         print("building ami...")
-        print(args["os"])
+        #print(args["os"])
         #build_config(args["os"])
         print("building")
     #else:
