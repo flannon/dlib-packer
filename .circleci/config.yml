@@ -6,7 +6,8 @@ jobs:
     working_directory: ~/packer
     steps:
       - run: pip install --user virtualenv
-      - run: virtualenv venv
+      - run: pip list
+      #- run: virtualenv venv
       #- run: source venv/bin/activate
       #- run: pip install requirements.txt
       - run: ls -l
