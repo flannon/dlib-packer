@@ -7,11 +7,12 @@ jobs:
     steps:
       - checkout
       #- run: pip install --user virtualenv
-      - run: pip list
       - run: ls -l
       #- run: virtualenv venv
       - run: source venv/bin/activate
-      - run: pip install requirements.txt
+      - run: pip list
+      - run: python --version
+      #- run: pip install requirements.txt
 
   validate:
     docker:
