@@ -1,11 +1,19 @@
 version: 2
 jobs:
+  setup:
+    working_directory: ~/packer
+    steps:
+      - run: pip install virtualenv
+      - run: virtualenv venv
+      - run: source venv/bin/activate
+      - run: pip install requirements.txt
   validate:
     docker:
       - image: flannon/circleci-centos7-packer
     working_directory: ~/packer
     steps:
       - checkout
+      - run: source venv/bin/activate
       - run:
           name: Validate centos (base)
           command: python build.py --os centos
@@ -20,18 +28,18 @@ jobs:
       #    name: packervalidate
       #    command packer validate base/centos-base.json
 
-  build-base:
-    docker:
-      - image: flannon/circleci-centos7-packer
-    working_directory: ~/packer
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/packer
-      - run:
-          name: Build base
-          command: ./bin/build.py centos
-          no_output_timeout: 30m
+  #build-base:
+  #  docker:
+  #    - image: flannon/circleci-centos7-packer
+  #  working_directory: ~/packer
+  #  steps:
+  #    - checkout
+  #    - attach_workspace:
+  #        at: ~/packer
+  #    - run:
+  #        name: Build base
+  #        command: ./bin/build.py centos
+  #        no_output_timeout: 30m
       #- persist_to_workspace:
       #    root: .
       #    paths:
@@ -43,6 +51,7 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
+      - setup
       - validate:
           context: aws_deploy
       #- build-base:
