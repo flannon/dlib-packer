@@ -24,11 +24,7 @@ def get_image_spec(build_os):
         'fedora': ('125523088429', 'Fedora-Cloud-Base-29-*"', 'true'),
         'self': (self_caller_id, 'name'),
     }
-    #return os_names.get(os_name, 'undef')
-    print("os_name.get: " )
-    return os_names.get(build_os)
-
-
+    return os_names.get(build_os, 'undef')
 
 def get_base_ami(caller_id, base_image_prefix, is_public):
     ec2 = boto3.client('ec2')
@@ -155,13 +151,15 @@ def main():
         print("SHA: " + os.environ['SHA'])
         print("AMI_SSH_USER: " + os.environ['AMI_SSH_USER'])
 
-        #call(["packer", "validate", bc])
-        print("packer validate " + bc)
+        call(["packer", "validate", bc])
+        #print("packer validate " + bc)
 
     elif args["os"]:
         print("building ami...")
         #print(args["os"])
-        #build_config(args["os"])
+
+        build_config(args["os"])
+
         print("building")
     #else:
     #    print("Usage: build.py -os <operating sytem> || -v")
