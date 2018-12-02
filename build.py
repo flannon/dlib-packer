@@ -146,6 +146,10 @@ def main():
         #print("SHA: " + os.environ['SHA'])
         #print("AMI_SSH_USER: " + os.environ['AMI_SSH_USER'])
 
+        print("access_key: " + os.environ['AWS_ACCESS_KEY_ID'])
+        print("build_vpc:: " + os.environ['BUILD_VPC_ID'])
+        print("build_subnet_id: "  + os.environ['BUILD_SUBNET_ID'])
+        print("build_subnet_id: "  + os.environ['BUILD_SECURITY_GROUP'])
         call(["packer", "validate", bc])
 
     elif args["os"]:
