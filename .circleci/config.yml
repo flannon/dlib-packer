@@ -6,12 +6,13 @@ jobs:
     working_directory: ~/packer
     steps:
       - checkout
-      - run:
-          name: Validate centos (base)
-          command: build.py centos
       #- run:
-      #    name: ls
-      #    command: ls -l base
+      #    name: Validate centos (base)
+      #    command: build.py centos
+      - run:
+          name: ls
+          command: ls -l 
+      - run: pwd
       #- run:
       #    name: packervalidate
       #    command packer validate base/centos-base.json
