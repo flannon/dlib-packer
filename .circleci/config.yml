@@ -5,7 +5,7 @@ jobs:
       - image: flannon/circleci-centos7-packer
     working_directory: ~/packer
     steps:
-      - run: pip install virtualenv
+      - run: pip install virtualenv --user circleci
       - run: virtualenv venv
       #- run: source venv/bin/activate
       #- run: pip install requirements.txt
