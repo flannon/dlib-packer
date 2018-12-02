@@ -18,16 +18,17 @@ jobs:
     steps:
       - checkout
       #- run: source venv/bin/activate
-      - run: echo "source ~/packer/venv/bin/activate" >> $BASH_ENV
+      #- run: echo "source ~/packer/venv/bin/activate" >> $BASH_ENV
+
+      - run:
+          name: ls
+          command: ls -l
+      - run: pwd
+      - run: python --version
+
       - run:
           name: Validate centos (base)
           command: python build.py --os centos -v
-
-      #- run:
-      #    name: ls
-      #    command: ls -l
-      #- run: pwd
-      #- run: python --version
 
       #- run:
       #    name: packervalidate
@@ -56,7 +57,7 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - setup
+      #- setup
       - validate:
           context: aws_deploy
       #- build-base:
