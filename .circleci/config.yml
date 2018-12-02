@@ -58,8 +58,8 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - setup
-      #- validate:
+      #- setup
+      - validate:
       #    context: aws_deploy
       #- build-base:
       #    context: aws_deploy
