@@ -20,7 +20,7 @@
       "type": "amazon-ebs",
       "access_key": "{{user `access_key`}}",
       "ami_description": "{{user `ami_description`}} AMI",
-      "ami_name": "{{user `ami_nam3`}} {{timestamp}}",
+      "ami_name": "{{user `ami_name`}} {{timestamp}}",
       "ami_regions": [
         "us-east-1"
       ],
@@ -36,6 +36,7 @@
       "ssh_username": "{{user `ami_user`}}",
       "subnet_id": "{{ user `subnet_id` }}",
       "tags": {
+        "Name": "{{user `ami_name`}}",
         "OS_Name": "{{user `ami_user`}}",
         "OS_Version": "7",
         "SHA": "{{user `ami_shaw`}}",
@@ -57,6 +58,10 @@
       "inline": [
         "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
       ]
+    },
+    {
+      "type": "shell",
+      "inline": [ "sudo yum -y update" ]
     },
     {
       "type": "shell",
