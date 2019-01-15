@@ -1,0 +1,93 @@
+{
+  "_readme": [
+    "These environment variables need to be set in the context or project: ",
+    "IAM_INSTANCE_PROFILE",
+    "AWS_ACCESS_KEY_ID",
+    "AWS_SECRET_ACCESS_KEY",
+    "BUILD_SECURITY_GROUP",
+    "BUILD_SUBNET_ID",
+    "BUILD_VPC_ID",
+    " ",
+    "These environment variables are set at run time by build.py",
+    "AMI_SSH_USER",
+    "BASE_AMI_ID",
+    "BASE_NAME",
+    "SHA",
+    ""
+  ],
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `access_key`}}",
+      "ami_description": "{{user `ami_description`}} AMI",
+      "ami_name": "{{user `ami_name`}} {{timestamp}}",
+      "ami_regions": [
+        "us-east-1"
+      ],
+      "ami_virtualization_type": "{{ user `ami_virtualization_type` }}",
+      "instance_type": "{{ user `instance_type` }}",
+      "region": "{{ user `region` }}",
+      "run_tags": {
+        "ami-create": "{{user `ami_name`}}"
+      },
+      "secret_key": "{{user `secret_key`}}",
+      "security_group_ids": [ "{{ user `security_group_id` }}" ],
+      "source_ami": "{{user `ami_base`}}",
+      "ssh_username": "{{user `ami_user`}}",
+      "subnet_id": "{{ user `subnet_id` }}",
+      "tags": {
+        "Name": "{{user `ami_name`}}",
+        "OS_Name": "{{user `ami_user`}}",
+        "OS_Version": "7",
+        "SHA": "{{user `ami_shaw`}}",
+        "AMI": "{{user `ami_description`}}"
+      },
+      "vpc_id": "{{ user `vpc_id` }}"
+    }
+  ],
+  "post-processors": [
+    {
+      "output": "manifest-base.json",
+      "strip_path": true,
+      "type": "manifest"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [ "sudo yum -y update" ]
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo {{ user `ec2_user` }} | {{ .Vars }} sudo -E -S bash '{{ .Path }}'",
+      "scripts": [
+        "./base/bin/baseline.sh",
+        "./base/bin/cleanup.sh",
+        "./base/bin/debug.sh"
+      ]
+    }
+  ],
+  "variables": {
+    "access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+    "ami_name": "baseline-{{env `AMI_SSH_USER`}}-7",
+    "ami_description": "{{env `BASE_NAME`}}",
+    "ami_base": "{{env `BASE_AMI_ID`}}",
+    "ami_sha":  "{{env `SHA`}}",
+    "ami_user":  "{{env `AMI_SSH_USER`}}",
+    "ec2_user":  "{{env `AMI_SSH_USER`}}",
+    "ami_virtualization_type": "hvm",
+    "iam_instance_profile": "{{env `AMI_INSTANCE_PROFILE`}}",
+    "instance_type": "t2.micro",
+    "region": "us-east-1",
+    "secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "security_group_id": "{{ env `BUILD_SECURITY_GROUP` }}",
+    "subnet_id": "{{env `BUILD_SUBNET_ID`}}",
+    "vpc_id": "{{env `BUILD_VPC_ID`}}"
+  }
+}
